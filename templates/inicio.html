@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- =======================================================
+     ENCABEZADO PRINCIPAL DE LA PÁGINA DE INICIO
+     Se usa color corporativo mediante clases definidas en custom.css
+     ======================================================= -->
+<div class="text-center mb-4">
+    <h1 class="fw-bold titulo-principal">Bienvenido al Sistema de Gestión Bazar</h1>
+    <p class="texto-subtitulo fs-5">Selecciona un módulo para comenzar</p>
+</div>
+
+
+<!-- =======================================================
+     GRID PRINCIPAL CON LOS ACCESOS A LOS MÓDULOS
+     Cada card funciona como un acceso rápido al módulo correspondiente
+     ======================================================= -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    <!-- =================== PRODUCTOS =================== -->
+    <div class="col">
+        <a href="{{ url_for('productos.listar_productos') }}" class="text-decoration-none">
+            <div class="card home-card card-inicio h-100 shadow-sm text-center p-4">
+                <div class="fs-1 mb-3 icono-inicio">📦</div>
+                <h5 class="fw-bold texto-modulo">Productos</h5>
+            </div>
+        </a>
+    </div>
+
+    <!-- =================== PROVEEDORES =================== -->
+    <div class="col">
+        <a href="{{ url_for('proveedores.listar_proveedores') }}" class="text-decoration-none">
+            <div class="card home-card card-inicio h-100 shadow-sm text-center p-4">
+                <div class="fs-1 mb-3 icono-inicio">🏢</div>
+                <h5 class="fw-bold texto-modulo">Proveedores</h5>
+            </div>
+        </a>
+    </div>
+
+    <!-- =================== COMPRAS ====================== -->
+    <div class="col">
+        <a href="{{ url_for('compras.listar_compras') }}" class="text-decoration-none">
+            <div class="card home-card card-inicio h-100 shadow-sm text-center p-4">
+                <div class="fs-1 mb-3 icono-inicio">🧾</div>
+                <h5 class="fw-bold texto-modulo">Compras</h5>
+            </div>
+        </a>
+    </div>
+
+    <!-- =================== VENTAS ======================= -->
+    <div class="col">
+        <a href="{{ url_for('ventas.listar_ventas') }}" class="text-decoration-none">
+            <div class="card home-card card-inicio h-100 shadow-sm text-center p-4">
+                <div class="fs-1 mb-3 icono-inicio">💰</div>
+                <h5 class="fw-bold texto-modulo">Ventas</h5>
+            </div>
+        </a>
+    </div>
+
+    <!-- =================== BALANCE ====================== -->
+    <div class="col">
+        <a href="{{ url_for('balance.balance_diario') }}" class="text-decoration-none">
+            <div class="card home-card card-inicio h-100 shadow-sm text-center p-4">
+                <div class="fs-1 mb-3 icono-inicio">📊</div>
+                <h5 class="fw-bold texto-modulo">Balance</h5>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

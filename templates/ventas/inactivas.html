@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ============================================================
+     VENTAS INACTIVAS (PAPELERA)
+     Registros marcados como inactivos mediante Soft Delete.
+     Esta vista permite revisar y restaurar dichas ventas.
+   ============================================================ -->
+<h2 class="mb-4 text-danger fw-bold">
+    🗑 Ventas Eliminadas (Papelera)
+</h2>
+
+<!-- Navegación hacia listado activo -->
+<a href="{{ url_for('ventas.listar_ventas') }}" class="btn btn-secondary mb-3">
+    ⬅ Volver a Ventas Activas
+</a>
+
+<!-- Mostrar tabla solo si existen ventas inactivas -->
+{% if ventas %}
+
+<table class="table table-striped table-hover align-middle shadow-sm">
+
+    <!-- ============================================================
+         CABECERA LIMPIA (BLANCA)
+         Mantiene consistency con la vista de Compras/Papelera.
+       ============================================================ -->
+    <thead class="text-center">
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Total ($)</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <!-- Recorrido de registros inactivos -->
+        {% for v in ventas %}
+        <tr>
+
+            <!-- Identificador -->
+            <td class="text-center">{{ v.id_venta }}</td>
+
+            <!-- Fecha formateada -->
+            <td class="text-center">
+                {{ v.fecha.strftime("%Y-%m-%d") }}
+            </td>
+
+            <!-- Hora separada -->
+            <td class="text-center">
+                {{ v.fecha.strftime("%H:%M:%S") }}
+            </td>
+
+            <!-- Total de la venta -->
+            <td class="text-end fw-bold">
+                $ {{ "%.2f"|format(v.total) }}
+            </td>
+
+            <!-- Restauración -->
+            <td class="text-center">
+                <a href="{{ url_for('ventas.restaurar_venta', id_venta=v.id_venta) }}"
+                   class="btn btn-success btn-sm"
+                   onclick="return confirm('¿Restaurar esta venta?');">
+                    ♻ Restaurar
+                </a>
+            </td>
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<!-- Mensaje cuando no hay registros eliminados -->
+<div class="alert alert-warning text-center">
+    No hay ventas inactivas por ahora.
+</div>
+
+{% endif %}
+
+{% endblock %}

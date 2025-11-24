@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ============================================================
+     PRODUCTOS INACTIVOS (PAPELERA)
+     Muestra los productos marcados como "inactivo" mediante
+     soft delete. Desde aquí pueden restaurarse.
+   ============================================================ -->
+<h2 class="mb-4 text-danger fw-bold">🗑 Productos Inactivos</h2>
+
+<!-- Navegación hacia el listado activo -->
+<a href="{{ url_for('productos.listar_productos') }}"
+   class="btn btn-secondary mb-3">
+    ⬅ Volver a Productos Activos
+</a>
+
+<!-- ============================================================
+     TABLA PRINCIPAL
+     Se renderiza solo si existen productos inactivos.
+   ============================================================ -->
+{% if productos %}
+
+<table class="table table-striped table-hover align-middle shadow-sm">
+
+    <!-- Encabezado rojo (estándar en todas las “papeleras” del sistema) -->
+    <thead class="bg-danger text-white text-center">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for p in productos %}
+        <tr>
+
+            <!-- Identificador del producto -->
+            <td class="text-center">{{ p.id_producto }}</td>
+
+            <!-- Datos principales -->
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.marca }}</td>
+            <td>{{ p.tipo }}</td>
+
+            <!-- Restauración de producto (soft delete -> activo) -->
+            <td class="text-center">
+                <a href="{{ url_for('productos.restaurar_producto', id_producto=p.id_producto) }}"
+                   class="btn btn-success btn-sm"
+                   onclick="return confirm('¿Restaurar este producto?');">
+                    ♻ Restaurar
+                </a>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% else %}
+
+<!-- Mensaje cuando la papelera está vacía -->
+<div class="alert alert-warning text-center">
+    No hay productos inactivos.
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ============================================================
+     LISTADO DE PRODUCTOS
+     Módulo encargado de mostrar los productos activos del sistema.
+     La clase vista-listar aplica el esquema de tablas corporativas.
+ <  ============================================================ -->
+<div class="vista-listar">
+
+    <!-- Título principal -->
+    <h2 class="mb-4 titulo-principal">Productos Registrados</h2>
+
+    <!-- Acciones principales -->
+    <div class="d-flex gap-2 mb-3">
+
+        <!-- Registrar nuevo producto -->
+       <a href="{{ url_for('productos.nuevo_producto') }}" class="btn btn-success"> 
+            ➕ Nuevo Producto
+        </a>
+
+        <!-- Ver productos inactivos (papelera) -->
+        <a href="{{ url_for('productos.productos_inactivos') }}" class="btn btn-secondary">
+            🗑️ Ver eliminados
+        </a>
+         
+    </div>
+ 
+    <!-- Renderizar tabla solo si existen productos -->
+    {% if productos %}
+
+    <div class="table-responsive">
+
+        <!-- Tabla principal del módulo Productos -->
+        <table class="table table-bordered table-hover align-middle shadow-sm">
+
+            <!-- Encabezado estilizado desde custom.css (.vista-listar th) -->
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Marca</th>
+                    <th>Cantidad</th>
+                    <th>Fecha ingreso</th>
+                    <th>P. Venta</th>
+                    <th>P. Compra</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            <!-- Cada fila representa un producto -->
+            {% for p in productos %}
+            <tr>
+
+                <!-- ID -->
+                <td class="text-center">{{ p.id_producto }}</td>
+
+                <!-- Datos base -->
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.tipo }}</td>
+                <td>{{ p.marca }}</td>
+
+                <!-- Stock actual -->
+                <td class="text-center">{{ p.cantidad }}</td>
+
+                <!-- Fecha de ingreso -->
+                <td class="text-center">
+                    {{ p.fecha_ingreso.strftime("%Y-%m-%d") }}
+                </td>
+
+                <!-- Precios formateados -->
+                <td class="text-end">
+                    $ {{ "%.2f"|format(p.precio_unitario_venta) }}
+                </td>
+
+                <td class="text-end">
+                    $ {{ "%.2f"|format(p.precio_unitario_compra) }}
+                </td>
+
+                <!-- Acciones: editar / eliminar -->
+                <td class="text-center">
+
+                    <!-- Editar producto -->
+                    <a href="{{ url_for('productos.editar_producto', id_producto=p.id_producto) }}"
+                       class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <!-- Soft-delete con validación mínima en línea -->
+                    <a href="{{ url_for('productos.eliminar_producto', id_producto=p.id_producto) }}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Eliminar este producto?');">
+                        Eliminar
+                    </a>
+
+                </td>
+
+            </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-warning text-center">
+        No hay productos registrados actualmente.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Título principal de la sección (color rojo para indicar papelera) -->
+<h2 class="mb-4 text-danger fw-bold">🗑 Proveedores Eliminados</h2>
+
+<!-- Volver al listado principal -->
+<a href="{{ url_for('proveedores.listar_proveedores') }}" class="btn btn-secondary mb-3">
+    ⬅ Volver a Proveedores Activos
+</a>
+
+<!-- Tabla de proveedores inactivos -->
+{% if proveedores %}
+
+<table class="table table-striped table-hover shadow-sm">
+
+    <!-- Encabezado rojo → coherente con el resto de módulos inactivos -->
+    <thead class="bg-danger text-white text-center">
+        <tr>
+            <th>ID</th>
+            <th>Empresa</th>
+            <th>Producto que abastecía</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for p in proveedores %}
+        <tr>
+
+            <!-- Datos principales -->
+            <td class="text-center">{{ p.id_proveedor }}</td>
+            <td>{{ p.nombre_empresa }}</td>
+            <td>{{ p.producto.nombre }}</td>
+
+            <!-- Restauración con confirmación -->
+            <td class="text-center">
+                <a href="{{ url_for('proveedores.restaurar_proveedor', id_proveedor=p.id_proveedor) }}"
+                   class="btn btn-success btn-sm"
+                   onclick="return confirm('¿Restaurar este proveedor?');">
+                    ♻ Restaurar
+                </a>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% else %}
+
+<!-- Mensaje cuando la papelera está vacía -->
+<div class="alert alert-warning text-center">
+    No hay proveedores eliminados.
+</div>
+
+{% endif %}
+
+{% endblock %}

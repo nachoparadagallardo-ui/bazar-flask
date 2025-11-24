@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ============================================================
+     REGISTRAR PRODUCTO
+     Formulario para incorporar un nuevo producto al inventario.
+     Usa estilos estándar definidos en custom.css (form-box, form-control, etc.)
+   ============================================================ -->
+<h2 class="mb-4 titulo-principal text-center">Registrar Producto</h2>
+
+<!-- Contenedor estándar para formularios -->
+<div class="form-box mx-auto">
+
+    <form method="POST">
+
+        <!-- Nombre del producto -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Nombre:</label>
+            <input type="text" name="nombre" class="form-control" required>
+        </div>
+
+        <!-- Tipo o categoría -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Tipo:</label>
+            <input type="text" name="tipo" class="form-control" required>
+        </div>
+
+        <!-- Marca del producto -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Marca:</label>
+            <input type="text" name="marca" class="form-control" required>
+        </div>
+
+        <!-- Cantidad inicial en stock -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Cantidad inicial:</label>
+            <input type="number" name="cantidad" class="form-control" min="0" required>
+        </div>
+
+        <!-- Fecha en que el producto ingresó al local -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Fecha de ingreso:</label>
+            <input type="date" name="fecha_ingreso" class="form-control" required>
+        </div>
+
+        <!-- Precio de venta al público -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Precio unitario de venta:</label>
+            <input type="number" step="0.01" name="precio_unitario_venta"
+                   class="form-control" required>
+        </div>
+
+        <!-- Precio al que se adquiere el producto -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Precio unitario de compra:</label>
+            <input type="number" step="0.01" name="precio_unitario_compra"
+                   class="form-control" required>
+        </div>
+
+        <!-- Acciones del formulario -->
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-primary btn-form">
+                Guardar
+            </button>
+
+            <a href="{{ url_for('productos.listar_productos') }}"
+               class="btn btn-secondary btn-form">
+                Cancelar
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ============================================================
+     BALANCE MENSUAL
+     Muestra el desempeño financiero acumulado desde el
+     primer día del mes hasta la fecha actual.
+   ============================================================ -->
+<h2 class="mb-4 titulo-principal">
+    Balance Mensual – Desde {{ fecha }}
+</h2>
+
+<!-- Grid de tarjetas con métricas financieras -->
+<div class="row g-3">
+
+    <!-- ===============================
+         Total de ventas del mes
+       =============================== -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-left-primary">
+            <div class="card-body">
+                <h5 class="card-title text-primary">Total Ventas</h5>
+                <p class="fs-4 fw-bold">
+                    $ {{ "%.2f"|format(datos.total_ventas) }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===============================
+         Total de compras del mes
+       =============================== -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-left-danger">
+            <div class="card-body">
+                <h5 class="card-title text-danger">Total Compras</h5>
+                <p class="fs-4 fw-bold">
+                    $ {{ "%.2f"|format(datos.total_compras) }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===============================
+         Ganancia bruta mensual
+       =============================== -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-left-warning">
+            <div class="card-body">
+                <h5 class="card-title text-warning">Ganancia Bruta</h5>
+                <p class="fs-4 fw-bold">
+                    $ {{ "%.2f"|format(datos.ganancia_bruta) }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===============================
+         IVA descontado (10%)
+       =============================== -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-left-secondary">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">IVA descontado (10%)</h5>
+                <p class="fs-4 fw-bold">
+                    $ {{ "%.2f"|format(datos.iva_descuento) }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===============================
+         Ganancia neta mensual
+       =============================== -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-left-success">
+            <div class="card-body">
+                <h5 class="card-title text-success">Ganancia Neta</h5>
+                <p class="fs-4 fw-bold">
+                    $ {{ "%.2f"|format(datos.ganancia_neta) }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- /.row -->
+
+<!-- Navegación hacia vistas relacionadas -->
+<hr class="my-4">
+
+<a href="{{ url_for('balance.balance_diario') }}" class="btn btn-secondary">
+    Ver Balance Diario
+</a>
+
+{% endblock %}

@@ -1,0 +1,229 @@
+/* ======================================================
+   ESTILOS GENERALES DEL SISTEMA
+   ====================================================== */
+
+body {
+    background-color: #f3f3f3;
+    font-family: Arial, sans-serif;
+}
+
+/* Contenedor estándar para las vistas */
+.content-container {
+    background: #ffffff;
+    padding: 25px;
+    margin-top: 25px;
+    margin-bottom: 35px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+/* ======================================================
+   TIPOGRAFÍA PRINCIPAL
+   ====================================================== */
+
+h1, h2, h3 {
+    color: #004080;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* ======================================================
+   NAVBAR
+   ====================================================== */
+
+.navbar {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.navbar-brand {
+    letter-spacing: 0.5px;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link:hover {
+    text-decoration: underline;
+}
+
+.logo-navbar {
+    height: 40px;
+    width: auto;
+}
+
+/* ======================================================
+   TABLAS – LISTADOS PRINCIPALES
+   ====================================================== */
+
+table {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+.table {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e9f1ff;
+}
+
+/* Encabezado corporativo de listas */
+.vista-listar table thead th {
+    background-color: #0a3d80 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+/* Encabezados internos (DETALLES) */
+.card-body table thead th {
+    background-color: #e6e6e6 !important;
+    color: #000 !important;
+    font-weight: 600;
+}
+
+/* Encabezado para vistas de elementos inactivos */
+.thead-inactivo th {
+    background-color: #343a40 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+/* ======================================================
+   FORMULARIOS – DISEÑO PROFESIONAL
+   ====================================================== */
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+/* Inputs más modernos */
+.form-control {
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+/* Contenedor estándar de formularios */
+.form-box {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+    max-width: 600px;
+}
+
+/* ======================================================
+   BOTONES – ESTILOS PROFESIONALES
+   ====================================================== */
+
+.btn {
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 10px 16px; /* tamaño balanceado */
+}
+
+/* Tamaños específicos */
+.btn-form {
+    width: 180px;     /* botones tamaño medio */
+}
+
+.btn-large {
+    width: 100%;
+    padding: 12px 0;
+}
+
+/* Colores corporativos */
+.btn-primary {
+    background-color: #004080;
+    border-color: #003366;
+}
+
+.btn-primary:hover {
+    background-color: #00325d;
+}
+
+.btn-success {
+    background-color: #0a7d38;
+}
+
+.btn-success:hover {
+    background-color: #08662e;
+}
+
+.btn-secondary {
+    background-color: #5c636a;
+}
+
+.btn-danger {
+    background-color: #c82333;
+}
+
+.btn-danger:hover {
+    background-color: #a61c27;
+}
+
+/* ======================================================
+   TARJETAS Y ESTADÍSTICAS (Balance)
+   ====================================================== */
+
+.border-left-primary { border-left: 4px solid #0d6efd; }
+.border-left-danger  { border-left: 4px solid #dc3545; }
+.border-left-warning { border-left: 4px solid #ffc107; }
+.border-left-success { border-left: 4px solid #198754; }
+.border-left-secondary { border-left: 4px solid #6c757d; }
+
+.home-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+}
+
+.home-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* ======================================================
+   INICIO – TARJETAS PRINCIPALES
+   ====================================================== */
+
+.titulo-principal {
+    color: #004080 !important;
+}
+
+.card-inicio {
+    border: 2px solid #e3e3e3;
+    border-radius: 14px;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.card-inicio:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    border-color: #004080;
+}
+
+.texto-modulo, .icono-inicio {
+    color: #004080 !important;
+}
+
+/* ======================================================
+   CABECERAS DE TARJETAS PERSONALIZADAS COMO EN VENTAS
+   ====================================================== */
+.card-header.bg-azul {
+    background-color: #004080 !important;
+    color: white !important;
+}
+
+/* Encabezados especiales para la papelera */
+.table-papelera thead th {
+    background-color: #dc3545 !important; /* Rojo Bootstrap */
+    color: white !important;
+}
+
+/* FORZAR estilo rojo en tablas de papelera dentro de vista-listar */
+.vista-listar .table-papelera thead th {
+    background-color: #dc3545 !important;
+    color: white !important;
+}

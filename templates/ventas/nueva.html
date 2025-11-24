@@ -1,0 +1,129 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<!-- Título principal del módulo -->
+<h2 class="mb-4">Registrar nueva venta</h2>
+
+<!-- 
+    Formulario principal de la venta.
+    La lógica dinámica (agregar filas, cálculos, validaciones)
+    se implementa en el archivo static/js/ventas.js
+-->
+<form method="POST" onsubmit="return validarFormulario();">
+
+    <!-- Tabla dinámica donde se agregan los productos de la venta -->
+    <table class="table table-bordered align-middle" id="tabla-detalle">
+
+        <!-- Encabezado de columnas -->
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <!-- Cuerpo dinámico: las filas se clonan/modifican desde ventas.js -->
+        <tbody id="tbody-detalle">
+
+            <!-- 
+                Fila inicial de detalle.
+                Se utiliza como plantilla para clonar nuevas filas de productos.
+            -->
+            <tr data-index="1">
+
+                <!-- Selección de producto (stock cargado desde la base de datos) -->
+                <td>
+                    <select name="producto_1" class="form-control" required>
+                        <option value="" selected disabled>Seleccione...</option>
+                        {% for p in productos %}
+                        <option value="{{ p.id_producto }}" data-stock="{{ p.cantidad }}">
+                            {{ p.nombre }} (Stock: {{ p.cantidad }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </td>
+
+                <!-- Cantidad solicitada por el cliente -->
+                <td>
+                    <input 
+                        type="number" 
+                        name="cantidad_1"
+                        class="form-control text-center" 
+                        min="1"
+                    >
+                </td>
+
+                <!-- Precio unitario de venta -->
+                <td>
+                    <input 
+                        type="number" 
+                        name="precio_1"
+                        step="0.01" 
+                        class="form-control text-center"
+                    >
+                </td>
+
+                <!-- Subtotal calculado automáticamente (cantidad x precio) -->
+                <td>
+                    <input 
+                        type="number" 
+                        name="subtotal_1"
+                        step="0.01" 
+                        readonly
+                        class="form-control text-center"
+                    >
+                </td>
+
+                <!-- Botón para eliminar la fila actual -->
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger btn-sm eliminar-fila">
+                        ✖
+                    </button>
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+    <!-- Botón para agregar nuevas filas de productos a la venta -->
+    <div class="text-end mb-4">
+        <button type="button" class="btn btn-secondary" id="agregar-fila">
+            + Agregar producto
+        </button>
+    </div>
+
+    <!-- Total general de la venta (se actualiza automáticamente desde ventas.js) -->
+    <div class="row mb-4">
+        <div class="col-12 col-md-4 ms-auto">
+            <label class="fw-semibold">Total Venta:</label>
+            <input 
+                type="number" 
+                id="total" 
+                readonly
+                step="0.01"
+                class="form-control text-center fw-bold bg-light"
+            >
+        </div>
+    </div>
+
+    <!-- Botones finales del formulario -->
+    <div class="mt-3 d-flex gap-2">
+        <button type="submit" class="btn btn-success">Registar Venta</button>
+        <a href="{{ url_for('ventas.listar_ventas') }}" class="btn btn-outline-secondary">
+            Cancelar
+        </a>
+    </div>
+
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+    <!-- Lógica dinámica del módulo de ventas (agregar/eliminar filas, cálculos, validaciones) -->
+    <script src="{{ url_for('static', filename='js/ventas.js') }}"></script>
+{% endblock %}

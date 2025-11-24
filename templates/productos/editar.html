@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ============================================================
+     EDITAR PRODUCTO
+     Formulario para actualizar los datos de un producto existente.
+     Se usa method="POST" para enviar cambios al backend.
+   ============================================================ -->
+<h2 class="mb-4 titulo-principal"><center>Editar Producto</center></h2>
+<!-- Contenedor estandarizado para formularios -->
+<div class="form-box mx-auto">
+
+    <!-- 
+        IMPORTANTE:
+        - La acción apunta a la misma ruta pero enviando el id del producto.
+        - El método POST permitirá que Flask procese la actualización.
+    -->
+    <form method="POST"
+          action="{{ url_for('productos.editar_producto', id_producto=producto.id_producto) }}">
+
+        <!-- Nombre -->
+        <div class="mb-3">
+            <label class="form-label">Nombre:</label>
+            <input type="text"
+                   name="nombre"
+                   class="form-control"
+                   required
+                   value="{{ producto.nombre }}">
+        </div>
+
+        <!-- Tipo -->
+        <div class="mb-3">
+            <label class="form-label">Tipo:</label>
+            <input type="text"
+                   name="tipo"
+                   class="form-control"
+                   required
+                   value="{{ producto.tipo }}">
+        </div>
+
+        <!-- Marca -->
+        <div class="mb-3">
+            <label class="form-label">Marca:</label>
+            <input type="text"
+                   name="marca"
+                   class="form-control"
+                   required
+                   value="{{ producto.marca }}">
+        </div>
+
+        <!-- Stock disponible -->
+        <div class="mb-3">
+            <label class="form-label">Stock:</label>
+            <input type="number"
+                   name="cantidad"
+                   class="form-control"
+                   min="0"
+                   required
+                   value="{{ producto.cantidad }}">
+        </div>
+
+        <!-- Precio unitario de venta -->
+        <div class="mb-3">
+            <label class="form-label">Precio unitario de venta:</label>
+            <input type="number"
+                   name="precio_unitario_venta"
+                   step="0.01"
+                   min="0"
+                   class="form-control"
+                   required
+                   value="{{ producto.precio_unitario_venta }}">
+        </div>
+
+        <!-- Precio unitario de compra -->
+        <div class="mb-3">
+            <label class="form-label">Precio unitario de compra:</label>
+            <input type="number"
+                   name="precio_unitario_compra"
+                   step="0.01"
+                   min="0"
+                   class="form-control"
+                   required
+                   value="{{ producto.precio_unitario_compra }}">
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-success btn-form">
+                Guardar Cambios
+            </button>
+
+            <a href="{{ url_for('productos.listar_productos') }}"
+               class="btn btn-secondary btn-form">
+                Volver
+            </a>
+        </div>
+
+    </form>
+
+</div> <!-- /.form-box -->
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ============================================================
+     LISTADO DE COMPRAS ACTIVAS
+     Vista encargada de exponer todas las compras registradas que
+     mantienen estado activo dentro del sistema. La estructura 
+     visual depende exclusivamente de custom.css para mantener 
+     coherencia estética en toda la plataforma.
+   ============================================================ -->
+<div class="vista-listar">
+
+    <!-- Título principal del módulo -->
+    <h2 class="mb-4 titulo-principal">Compras Registradas</h2>
+
+    <!-- Acciones disponibles en la cabecera del módulo -->
+    <div class="d-flex gap-2 mb-3">
+
+        <!-- Registrar una nueva compra -->
+        <a href="{{ url_for('compras.nueva_compra') }}" class="btn btn-success">
+            ➕ Nueva Compra
+        </a>
+
+        <!-- Navegar hacia el historial de compras inactivas -->
+        <a href="{{ url_for('compras.compras_inactivas') }}" class="btn btn-secondary">
+            🗑️ Ver eliminadas
+        </a>
+    </div>
+
+    <!-- Renderizado condicional: solo se muestra la tabla si hay compras -->
+    {% if compras %}
+
+    <div class="table-responsive">
+
+        <!-- ============================================================
+             TABLA PRINCIPAL DE COMPRAS
+             Los estilos como bordes, colores y efectos hover se manejan 
+             desde custom.css para no contaminar la vista con código visual.
+           ============================================================ -->
+        <table class="table table-bordered table-hover align-middle shadow-sm">
+
+            <!-- Encabezado con diseño corporativo desde custom.css -->
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Proveedor</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>P. Unitario</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            <!-- Recorrido dinámico de registros -->
+            {% for c in compras %}
+                <tr>
+
+                    <!-- Identificador único -->
+                    <td class="text-center">{{ c.id_compra }}</td>
+
+                    <!-- Proveedor abastecedor -->
+                    <td>{{ c.proveedor.nombre_empresa }}</td>
+
+                    <!-- Producto asociado al proveedor -->
+                    <td>{{ c.proveedor.producto.nombre }}</td>
+
+                    <!-- Cantidad adquirida -->
+                    <td class="text-center">{{ c.cantidad }}</td>
+
+                    <!-- Precio unitario (formato monetario) -->
+                    <td class="text-end">
+                        $ {{ "%.2f"|format(c.precio_unitario_compra) }}
+                    </td>
+
+                    <!-- Total de la compra -->
+                    <td class="text-end fw-bold">
+                        $ {{ "%.2f"|format(c.total) }}
+                    </td>
+
+                    <!-- Fecha por separado (ISO profesional) -->
+                    <td class="text-center">
+                        {{ c.fecha.strftime("%Y-%m-%d") }}
+                    </td>
+
+                    <!-- Hora por separado -->
+                    <td class="text-center">
+                        {{ c.fecha.strftime("%H:%M:%S") }}
+                    </td>
+
+                    <!-- Soft Delete -->
+                    <td class="text-center">
+                        <!-- Validación mínima inline. No amerita archivo JS dedicado. -->
+                        <a href="{{ url_for('compras.eliminar_compra', id_compra=c.id_compra) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('¿Eliminar esta compra?');">
+                            🗑 Eliminar
+                        </a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+    {% else %}
+
+    <!-- Estado vacío -->
+    <div class="alert alert-warning text-center">
+        No hay compras registradas todavía.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+

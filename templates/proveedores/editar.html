@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ============================================================
+     EDITAR PROVEEDOR
+     Vista responsable de modificar los datos de un proveedor
+     ya existente en el sistema.
+   ============================================================ -->
+<h2 class="mb-4 titulo-principal text-center">Editar Proveedor</h2>
+
+<!-- Contenedor estándar reutilizado por todo el sistema -->
+<div class="form-box mx-auto">
+
+    <form method="POST">
+
+        <!-- ============================================================
+             Nombre de la empresa
+             Campo principal de identificación del proveedor.
+           ============================================================ -->
+        <label class="form-label">Nombre de la empresa:</label>
+        <input type="text" name="nombre_empresa"
+               value="{{ proveedor.nombre_empresa }}" 
+               class="form-control" required>
+
+        <br>
+
+        <!-- ============================================================
+             Dirección física del proveedor
+           ============================================================ -->
+        <label class="form-label">Dirección:</label>
+        <input type="text" name="direccion"
+               value="{{ proveedor.direccion }}" 
+               class="form-control" required>
+
+        <br>
+
+        <!-- ============================================================
+             Teléfono de contacto directo
+           ============================================================ -->
+        <label class="form-label">Teléfono:</label>
+        <input type="text" name="telefono"
+               value="{{ proveedor.telefono }}"
+               class="form-control" required>
+
+        <br>
+
+        <!-- ============================================================
+             Persona encargada de las comunicaciones comerciales
+           ============================================================ -->
+        <label class="form-label">Persona de contacto:</label>
+        <input type="text" name="persona_contacto"
+               value="{{ proveedor.persona_contacto }}"
+               class="form-control" required>
+
+        <br>
+
+        <!-- ============================================================
+             Producto asociado (1 proveedor → 1 producto)
+             Se selecciona de una lista de productos activos.
+           ============================================================ -->
+        <label class="form-label">Producto que abastece:</label>
+        <select name="id_producto" class="form-control" required>
+
+            {% for p in productos %}
+                <option value="{{ p.id_producto }}"
+                        {% if proveedor.id_producto == p.id_producto %}selected{% endif %}>
+                    {{ p.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <!-- ============================================================
+             Acciones del formulario
+             Botón guardar y botón cancelar.
+           ============================================================ -->
+        <div class="d-flex justify-content-between mt-4">
+
+            <!-- Guardar cambios -->
+            <button type="submit" class="btn btn-success btn-form">
+                Guardar Cambios
+            </button>
+
+            <!-- Cancelar y volver al listado -->
+            <a href="{{ url_for('proveedores.listar_proveedores') }}"
+               class="btn btn-secondary btn-form">
+                Cancelar
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

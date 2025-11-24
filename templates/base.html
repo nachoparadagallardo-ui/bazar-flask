@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Vista responsive para móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gestión Bazar</title>
+
+    <!-- =============================== -->
+    <!-- BOOTSTRAP (CSS)                -->
+    <!-- =============================== -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- =============================== -->
+    <!-- ESTILOS PERSONALIZADOS (CSS)    -->
+    <!-- =============================== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+
+<body>
+
+    <!-- =============================== -->
+    <!-- NAVBAR PRINCIPAL                -->
+    <!-- =============================== -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+
+            <!-- Logo o nombre del sistema -->
+            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+                Bazar
+            </a>
+
+            <!-- Botón hamburguesa -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuSuperior">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menuSuperior">
+
+                <ul class="navbar-nav me-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">Inicio</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('productos.listar_productos') }}">Productos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('proveedores.listar_proveedores') }}">Proveedores</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('compras.listar_compras') }}">Compras</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('ventas.listar_ventas') }}">Ventas</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('balance.balance_diario') }}">Balance</a>
+                    </li>
+
+                </ul>
+
+                {% if request.endpoint != 'index' %}
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-light ms-3">⬅ Salir</a>
+                {% endif %}
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- =============================== -->
+    <!-- CONTENIDO DE CADA MÓDULO        -->
+    <!-- =============================== -->
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- =============================== -->
+    <!-- BOOTSTRAP (JS)                  -->
+    <!-- =============================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bloque opcional para scripts por módulo -->
+    {% block scripts %}{% endblock %}      
+     
+</body>
+</html>

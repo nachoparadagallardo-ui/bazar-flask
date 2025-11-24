@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ============================================================
+     LISTADO DE VENTAS
+     Muestra todas las ventas activas con sus detalles asociados.
+     Utiliza tarjetas para una visualización clara y profesional.
+   ============================================================ -->
+<div class="vista-listar">
+
+    <!-- Título del módulo -->
+    <h2 class="mb-4 titulo-principal">Ventas Registradas</h2>
+
+    <!-- Acciones superiores -->
+    <div class="d-flex gap-2 mb-3">
+        <a href="{{ url_for('ventas.nueva_venta') }}" class="btn btn-success">
+            ➕ Nueva Venta
+        </a>
+        <a href="{{ url_for('ventas.ventas_inactivas') }}" class="btn btn-secondary">
+            🗑️ Ventas Eliminadas
+        </a>
+    </div>
+
+    <!-- Mostrar ventas solo si existen -->
+    {% if ventas %}
+
+        {% for v in ventas %}
+
+        <!-- Tarjeta contenedora de la venta -->
+        <div class="card shadow-sm mb-4">
+
+            <!-- ============================================================
+                 ENCABEZADO DE TARJETA: Datos principales de la venta
+               ============================================================ -->
+            <div class="card-header bg-azul text-white d-flex justify-content-between align-items-center">
+
+                <span class="fw-bold">
+
+                    <!-- Número de venta -->
+                    Venta #{{ v.id_venta }}
+
+                    <!-- Fecha en formato separado (día-mes-año) -->
+                    — 📅 {{ v.fecha.strftime('%d-%m-%Y') }}
+
+                    <!-- Hora separada (HH:MM:SS) -->
+                    — ⏰ {{ v.fecha.strftime('%H:%M:%S') }}
+                </span>
+
+                <!-- Acción de eliminación (Soft Delete) -->
+                <a href="{{ url_for('ventas.eliminar_venta', id_venta=v.id_venta) }}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Seguro que deseas eliminar esta venta?');">
+                    ❌ Eliminar
+                </a>
+            </div>
+
+            <!-- ============================================================
+                 CUERPO DE TARJETA: Total + Detalle de productos vendidos
+               ============================================================ -->
+            <div class="card-body">
+
+                <!-- Total de la venta -->
+                <p class="fw-bold fs-5 mb-3">
+                    Total: 
+                    <span class="text-success">
+                        $ {{ "%.2f"|format(v.total) }}
+                    </span>
+                </p>
+
+                <h6 class="text-secondary mb-2">Detalles de la venta:</h6>
+
+                <!-- Tabla de productos vendidos -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm">
+
+                        <!-- Encabezado gris (jerarquía menor al encabezado azul) -->
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="small">
+                            {% for d in v.detalles %}
+                            <tr>
+                                <td>{{ d.producto.nombre }}</td>
+                                <td class="text-center">{{ d.cantidad }}</td>
+                                <td class="text-end">$ {{ "%.2f"|format(d.precio_unitario) }}</td>
+                                <td class="text-end">$ {{ "%.2f"|format(d.subtotal) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+    <!-- Si no existen ventas registradas -->
+    <div class="alert alert-warning text-center">
+        No hay ventas registradas todavía.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

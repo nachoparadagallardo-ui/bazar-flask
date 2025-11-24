@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ============================================================
+     COMPRAS INACTIVAS (PAPELERA)
+     Vista encargada de mostrar todas las compras que fueron
+     marcadas como inactivas mediante Soft Delete.
+     Permite restaurar cada registro.
+   ============================================================ -->
+<h2 class="mb-4 text-danger fw-bold">
+    🗑 Compras Eliminadas (Papelera)
+</h2>
+
+<!-- Navegación para volver al módulo principal -->
+<a href="{{ url_for('compras.listar_compras') }}" class="btn btn-secondary mb-3">
+    ⬅ Volver al listado
+</a>
+
+<!-- ============================================================
+     TABLA DE COMPRAS INACTIVAS
+     Solo se renderiza si existen registros en papelera.
+   ============================================================ -->
+{% if compras %}
+
+<table class="table table-striped table-hover align-middle shadow-sm">
+
+    <!-- Encabezado propio de la papelera (sin estilos externos) -->
+    <thead class="text-center">
+        <tr>
+            <th>ID</th>
+            <th>Proveedor</th>
+            <th>Producto</th>
+            <th>Total</th>
+            <th>Fecha</th>  <!-- FECHA SEPARADA -->
+            <th>Hora</th>   <!-- HORA SEPARADA -->
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    <!-- Recorrido dinámico de registros inactivos -->
+    {% for c in compras %}
+        <tr>
+
+            <!-- Identificador asignado a la compra -->
+            <td class="text-center">{{ c.id_compra }}</td>
+
+            <!-- Empresa proveedora asociada -->
+            <td>{{ c.proveedor.nombre_empresa }}</td>
+
+            <!-- Producto abastecido por ese proveedor -->
+            <td>{{ c.proveedor.producto.nombre }}</td>
+
+            <!-- Total de la compra -->
+            <td class="text-end fw-bold">
+                $ {{ "%.2f"|format(c.total) }}
+            </td>
+
+            <!-- Fecha formateada -->
+            <td class="text-center">
+                {{ c.fecha.strftime("%Y-%m-%d") }}
+            </td>
+
+            <!-- Hora formateada -->
+            <td class="text-center">
+                {{ c.fecha.strftime("%H:%M:%S") }}
+            </td>
+
+            <!-- Restauración del registro (Soft Delete reversible) -->
+            <td class="text-center">
+                <a href="{{ url_for('compras.restaurar_compra', id_compra=c.id_compra) }}"
+                   class="btn btn-success btn-sm"
+                   onclick="return confirm('¿Restaurar esta compra?');">
+                    ♻ Restaurar
+                </a>
+            </td>
+
+        </tr>
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% else %}
+
+<!-- Cuando no existen compras en papelera -->
+<div class="alert alert-warning text-center">
+    No hay compras eliminadas.
+</div>
+
+{% endif %}
+
+{% endblock %}

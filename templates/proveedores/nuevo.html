@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ============================================================
+     REGISTRAR PROVEEDOR
+     Formulario destinado a incorporar un nuevo proveedor al sistema.
+     Sigue el mismo estándar visual que compras y ventas.
+   ============================================================ -->
+<h2 class="mb-4 titulo-principal text-center">Registrar Nuevo Proveedor</h2>
+
+<!-- Contenedor estándar reutilizado para todos los formularios -->
+<div class="form-box mx-auto">
+
+    <form method="POST">
+
+        <!-- ============================================================
+             Nombre de la empresa
+             Identificador comercial del proveedor.
+           ============================================================ -->
+        <label class="form-label">Nombre de la empresa:</label>
+        <input type="text" name="nombre_empresa"
+               class="form-control" required>
+
+        <br>
+
+        <!-- ============================================================
+             Dirección física del proveedor
+           ============================================================ -->
+        <label class="form-label">Dirección:</label>
+        <input type="text" name="direccion"
+               class="form-control" required>
+
+        <br>
+
+        <!-- ============================================================
+             Teléfono de contacto directo
+           ============================================================ -->
+        <label class="form-label">Teléfono:</label>
+        <input type="text" name="telefono"
+               class="form-control" required>
+
+        <br>
+
+        <!-- ============================================================
+             Persona responsable de contacto comercial
+           ============================================================ -->
+        <label class="form-label">Persona de contacto:</label>
+        <input type="text" name="persona_contacto"
+               class="form-control" required>
+
+        <br>
+
+        <!-- ============================================================
+             Producto que abastece el proveedor
+             Relación N:1 (cada proveedor abastece solo un producto).
+           ============================================================ -->
+        <label class="form-label">Producto que abastece:</label>
+        <select name="id_producto" class="form-control" required>
+            <option value="" disabled selected>Seleccione una opción...</option>
+
+            {% for p in productos %}
+                <option value="{{ p.id_producto }}">
+                    {{ p.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <!-- ============================================================
+             Acciones del formulario
+           ============================================================ -->
+        <div class="d-flex justify-content-between mt-4">
+
+            <!-- Registrar proveedor -->
+            <button type="submit" class="btn btn-success btn-form">
+                Guardar Proveedor
+            </button>
+
+            <!-- Volver al listado -->
+            <a href="{{ url_for('proveedores.listar_proveedores') }}"
+               class="btn btn-secondary btn-form">
+                Volver
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

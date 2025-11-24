@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ============================================================
+     LISTADO DE PROVEEDORES
+     Vista encargada de mostrar proveedores activos del sistema.
+     Usa la clase .vista-listar para aplicar estilos corporativos
+     a encabezados y estructura de tabla.
+   ============================================================ -->
+<div class="vista-listar">
+
+    <!-- Título del módulo -->
+    <h2 class="mb-4 titulo-principal">Proveedores Registrados</h2>
+
+    <!-- Acciones superiores -->
+    <div class="d-flex gap-2 mb-3">
+
+        <!-- Crear nuevo proveedor -->
+        <a href="{{ url_for('proveedores.nuevo_proveedor') }}" class="btn btn-success">
+            ➕ Nuevo Proveedor
+        </a>
+
+        <!-- Ir a proveedores inactivos -->
+        <a href="{{ url_for('proveedores.proveedores_inactivos') }}" class="btn btn-secondary">
+            🗑️ Ver eliminados
+        </a>
+
+    </div>
+
+    <!-- Tabla principal -->
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+
+        <!-- Encabezado estilizado desde custom.css -->
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Empresa</th>
+                <th>Producto</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Contacto</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <!-- Cuerpo de datos -->
+        <tbody>
+
+        {% for p in proveedores %}
+            <tr>
+
+                <!-- Identificador -->
+                <td class="text-center">{{ p.id_proveedor }}</td>
+
+                <!-- Nombre de la empresa proveedora -->
+                <td>{{ p.nombre_empresa }}</td>
+
+                <!-- Producto que este proveedor abastece -->
+                <td>{{ p.producto.nombre }}</td>
+
+                <!-- Dirección registrada -->
+                <td>{{ p.direccion }}</td>
+
+                <!-- Teléfono de contacto -->
+                <td>{{ p.telefono }}</td>
+
+                <!-- Nombre del encargado o contacto comercial -->
+                <td>{{ p.persona_contacto }}</td>
+
+                <!-- Acciones de gestión -->
+                <td class="text-center">
+
+                    <!-- Editar proveedor -->
+                    <a href="{{ url_for('proveedores.editar_proveedor', id_proveedor=p.id_proveedor) }}"
+                       class="btn btn-warning btn-sm">
+                        ✏️ Editar
+                    </a>
+
+                    <!-- Soft delete con confirmación -->
+                    <a href="{{ url_for('proveedores.eliminar_proveedor', id_proveedor=p.id_proveedor) }}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Eliminar este proveedor?');">
+                        🗑 Eliminar
+                    </a>
+
+                </td>
+
+            </tr>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div> <!-- /.vista-listar -->
+
+{% endblock %}
