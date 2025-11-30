@@ -6,7 +6,7 @@ class Config:
     # FORMATO: mysql+pymysql://USUARIO:PASSWORD@HOST/BASE_DE_DATOS
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:12345@localhost/bazar"
 
-    # Desactiva el seguimiento para optimizar rendimiento (recomendado)
+    # Desactiva el seguimiento para optimizar rendimiento 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 # “El archivo config.py contiene la configuración principal de la aplicación Flask,
 # incluyendo la clave secreta para seguridad y la cadena de conexión a la base de datos MySQL.
