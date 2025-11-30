@@ -1,18 +1,5 @@
 # ========================================================================
 # MODELOS SQLAlchemy para el sistema de Gestión de Bazar
-# Autor: Ignacio Parada
-#
-# Este archivo define toda la estructura lógica de la base de datos
-# utilizando SQLAlchemy, asegurando:
-#   - Relaciones correctas 1:N y N:M
-#   - Tablas coherentes con MySQL
-#   - Soft delete (estado) en compras, ventas, productos y proveedores
-#   - Registro con fecha + hora real (hora chilena UTC-3)
-#
-# Este archivo fue actualizado para:
-#   ✔ Corregir tipos de datos (DATE → DATETIME)
-#   ✔ Unificar la hora en un solo campo datetime
-#   ✔ Eliminar relaciones duplicadas
 # ========================================================================
 
 from datetime import datetime, timedelta, timezone
@@ -45,8 +32,7 @@ class Producto(db.Model):
 
 
 # ========================================================================
-# TABLA: PROVEEDOR
-# Un proveedor abastece SOLO un producto (N proveedores → 1 producto)
+# TABLA: PROVEEDOR                                                                                                                                    
 # ========================================================================
 class Proveedor(db.Model):
     __tablename__ = "proveedor"
@@ -66,8 +52,7 @@ class Proveedor(db.Model):
 
 
 # ========================================================================
-# TABLA: COMPRA
-# Registra el ingreso de stock (incluye fecha + hora exactas)
+# TABLA: COMPRA                                                                                 
 # ========================================================================
 class Compra(db.Model):
     __tablename__ = "compra"
@@ -119,8 +104,7 @@ class Venta(db.Model):
 
 # ========================================================================
 # TABLA: DETALLEVENTA
-# Almacena cada producto incluido en una venta
-# Representa N:M entre Venta y Producto
+# Almacena cada producto incluido en una venta                                                                    
 # ========================================================================
 class DetalleVenta(db.Model):
     __tablename__ = "detalleventa"
